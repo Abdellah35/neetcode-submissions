@@ -1,0 +1,18 @@
+class Solution {
+    public int lastStoneWeight(int[] stones) {
+        Queue<Integer> maxHeap = new PriorityQueue<>((a, b) -> Integer.compare(b, a));
+        for (int stone: stones) {
+            maxHeap.offer(stone);
+        }
+
+        while (maxHeap.size() > 1) {
+            int stone1 = maxHeap.poll();
+            int stone2 = maxHeap.poll();
+            if (stone1 > stone2 || stone2 > stone1) {
+                maxHeap.offer(Math.abs(stone2 - stone1));
+            }
+        }
+
+        return maxHeap.size() == 1 ? maxHeap.poll() : 0;
+    }
+}
